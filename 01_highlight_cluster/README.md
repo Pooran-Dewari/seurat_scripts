@@ -14,6 +14,6 @@ The R functions attached will
 
 ***
 
-##### An example shown below:  
+##### An example of output pdf shown below:  
 
 ![example](example.png)
