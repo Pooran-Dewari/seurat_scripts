@@ -8,7 +8,8 @@
 
 library(Seurat)
 library(tidyverse)
-# part1: Function to create the output directory and return its name
+
+# part 1: Function to create the output directory and return its name
 create_output_directory <- function(base_name) {
   counter <- 0
   dir_name <- as.character(base_name)
@@ -26,7 +27,8 @@ create_output_directory <- function(base_name) {
   return(dir_name)
 }
 
-# part2: Function to highlight a cluster and save a plot in the specified directory
+
+# part 2: Function to highlight a cluster and save a plot in the specified directory
 plot_highlight_cluster <- function(x, output_dir) {
   
   # define variables to categorise based on cluster of interest, also for outputting file names
@@ -52,7 +54,8 @@ plot_highlight_cluster <- function(x, output_dir) {
   dev.off()
 }
 
-# part3: Main function to create the directory and generate plots
+
+# part 3: Main function to create the directory and generate plots
 main_function <- function() {
   
   # create the output directory once, EDIT argument if needs be
@@ -65,5 +68,5 @@ main_function <- function() {
   lapply(0:cluster_count, plot_highlight_cluster, output_dir)
 }
 
-# Run the main function, this will create the directory and output plots as pdf
+# part 4: Run the main function, this will create the directory and output plots as pdf
 main_function()
