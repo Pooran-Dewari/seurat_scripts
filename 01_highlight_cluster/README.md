@@ -1,7 +1,10 @@
-Motivation: Create an output dir, plot and output umaps with every single cluster highlighted rest grayed out  
+### Motivation
+Create an output dir, plot and output umaps with a specific cluster highlighted the rest grayed out, do this across all samples
 
-Assumptions: Assumes that seurat.filtered object is accessible with umap assay in it  
+### Assumptions
+Assumes that seurat.filtered object is accessible with umap assay in it  
 
+### Workflow
 The R functions attached will 
 - first check if output_dir exists
 - if it doesn't, it will create the dir and output results in there
@@ -9,3 +12,8 @@ The R functions attached will
 - if output_dir1 exists, it will create output_dir2, output results in there, so on and so forth
 
 
+***
+
+##### An example shown below:  
+
+![example](example.png)
