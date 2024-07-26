@@ -1,3 +1,10 @@
+#Motivation: It is quite a challenge to optimise dims and resolution parameters for clustering and UMAP plotting
+# this script can create all possible combinations of user-supplied dims and resolutions parameters
+# for example, the script below will create plots using all possible combinations of dims (20,25,30) and res (0.5, 0.6, 0.7, 0.8, 0.9) values
+
+
+# code STARTS ...........................................
+
 library(Seurat) # Ensure Seurat is loaded
 library(ggplot2)
 library(glue)
@@ -6,7 +13,7 @@ dim_lo <- 1
 dim_up <- c(20, 25, 30)
 res <- c(0.5, 0.6, 0.7, 0.8, 0.9)
 
-# Function to create the output directory and return its name
+# function to create the output directory and return its name
 create_output_directory <- function(base_name) {
   counter <- 0
   dir_name <- as.character(base_name)
@@ -24,10 +31,10 @@ create_output_directory <- function(base_name) {
   return(dir_name)
 }
 
-# Create the directory for saving plots
+# step 1: create the directory for saving plots
 output_dir <- create_output_directory("plot_dim_res_combinations")
 
-# Function to generate plots and save them as PDFs
+# function to generate plots and save them as PDFs
 generate_plots <- function(dim_up_value, res_value, output_dir) {
   # Adjust the Seurat object according to the current parameters
   seurat.filtered <- FindNeighbors(seurat.filtered, dims = dim_lo:dim_up_value)
@@ -51,7 +58,10 @@ generate_plots <- function(dim_up_value, res_value, output_dir) {
   return(p)
 }
 
-# Apply the plotting function to each combination
+# step 2: apply the plotting function to each combination
 lapply(1:nrow(combinations), function(i) {
   generate_plots(combinations$dim_up[i], combinations$res[i], output_dir)
 })
+
+# code ENDS ...........................................
+
