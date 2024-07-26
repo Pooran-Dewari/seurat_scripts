@@ -13,7 +13,7 @@ dim_lo <- 1
 dim_up <- c(20, 25, 30)
 res <- c(0.5, 0.6, 0.7, 0.8, 0.9)
 
-# function to create the output directory and return its name
+# Function to create the output directory and return its name
 create_output_directory <- function(base_name) {
   counter <- 0
   dir_name <- as.character(base_name)
@@ -31,10 +31,10 @@ create_output_directory <- function(base_name) {
   return(dir_name)
 }
 
-# step 1: create the directory for saving plots
+# step 1: Create the directory for saving plots
 output_dir <- create_output_directory("plot_dim_res_combinations")
 
-# function to generate plots and save them as PDFs
+# Function to generate plots and save them as PDFs
 generate_plots <- function(dim_up_value, res_value, output_dir) {
   # Adjust the Seurat object according to the current parameters
   seurat.filtered <- FindNeighbors(seurat.filtered, dims = dim_lo:dim_up_value)
@@ -42,26 +42,30 @@ generate_plots <- function(dim_up_value, res_value, output_dir) {
   seurat.filtered <- RunUMAP(seurat.filtered, dims = dim_lo:dim_up_value)
   
   # Create the plot
-  p <- DimPlot(seurat.filtered, reduction = "umap", label = TRUE,
-               label.size = 4,
-               label.color = "black",
-               label.box = TRUE,
-               repel = TRUE) +
+  plot <- DimPlot(seurat.filtered, reduction = "umap", label = TRUE,
+                  label.size = 4,
+                  label.color = "black",
+                  label.box = TRUE,
+                  repel = TRUE) + 
+    NoLegend() +
     ggtitle(glue("dims = {dim_up_value}, resolution={res_value}"))
   
-  # Define the filename using the parameters
-  filename <- glue("{output_dir}/dims_{dim_up_value}_res_{res_value}.pdf")
+  # Open a PDF device
+  pdf_filename <- file.path(output_dir, glue("dims_{dim_up_value}_res_{res_value}.pdf"))
+  pdf(pdf_filename)
   
-  # Save the plot as a PDF
-  ggsave(filename, plot = p, device = "pdf", width = 6, height = 4, units = "in")
+  # Print the plot to the PDF
+  print(plot)
   
-  return(p)
+  # Close the PDF device
+  dev.off()
 }
 
-# step 2: apply the plotting function to each combination
+# step 2: Apply the plotting function to each combination
 lapply(1:nrow(combinations), function(i) {
   generate_plots(combinations$dim_up[i], combinations$res[i], output_dir)
 })
+
 
 # code ENDS ...........................................
 
