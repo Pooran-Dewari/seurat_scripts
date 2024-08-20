@@ -13,6 +13,9 @@ dim_lo <- 1
 dim_up <- c(20, 25, 30)
 res <- c(0.5, 0.6, 0.7, 0.8, 0.9)
 
+# Create a data frame of all combinations of dim_up and res
+combinations <- expand.grid(dim_up = dim_up, res = res)
+
 # Function to create the output directory and return its name
 create_output_directory <- function(base_name) {
   counter <- 0
@@ -68,4 +71,3 @@ lapply(1:nrow(combinations), function(i) {
 
 
 # code ENDS ...........................................
-
